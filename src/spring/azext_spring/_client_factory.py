@@ -4,7 +4,7 @@
 # --------------------------------------------------------------------------------------------
 from azure.cli.core.commands.client_factory import get_mgmt_service_client
 from azure.cli.core.profiles import ResourceType
-from .vendored_sdks.appplatform.v2024_01_01_preview import AppPlatformManagementClient
+from .vendored_sdks.appplatform.v2024_05_01_preview import AppPlatformManagementClient
 
 
 def cf_spring(cli_ctx, *_):
@@ -34,10 +34,6 @@ def cf_bindings(cli_ctx, *_):
 
 def cf_eureka_servers(cli_ctx, *_):
     return cf_spring(cli_ctx).eureka_servers
-
-
-def cf_config_servers(cli_ctx, *_):
-    return cf_spring(cli_ctx).config_servers
 
 
 def cf_certificates(cli_ctx, *_):
