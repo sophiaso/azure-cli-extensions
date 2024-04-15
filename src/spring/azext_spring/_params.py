@@ -175,7 +175,7 @@ def load_arguments(self, _):
                    help='(Enterprise Tier Only) Application Configuration Service Generation to enable.')
         c.argument('enable_config_server',
                    action='store_true',
-                   options_list=['--enable-config-server'],
+                   options_list=['--enable-config-server', '--enable-cs'],
                    arg_group="Config Server",
                    help='(Enterprise Tier Only) Enable Config Server.')
         c.argument('enable_application_live_view',
