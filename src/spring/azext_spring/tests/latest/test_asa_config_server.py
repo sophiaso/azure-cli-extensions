@@ -71,7 +71,7 @@ class BasicTest(unittest.TestCase):
         self.created_resource = call_args[0][0][3]
 
 class ConfigCreateCommandTest(BasicTest):
-    def test_config_create_resource_exists(self, mock_models):
+    def test_config_create_resource_exists(self):
         cmd = _get_test_cmd()
         client = _cf_resource_group(cmd.cli_ctx)
         service = "my-service"
@@ -86,14 +86,11 @@ class ConfigCreateCommandTest(BasicTest):
         client.config_servers.get.assert_called_once_with(resource_group, service, "default")
         client.config_servers.begin_create_or_update.assert_not_called()
 
-    def test_config_create_resource_not_exists(self, mock_models):
+    def test_config_create_resource_not_exists(self):
         cmd = _get_test_cmd()
         client = _cf_resource_group(cmd.cli_ctx)
         service = "my-service"
         resource_group = "my-resource-group"
-
-        mock_models.ConfigServerProperties.return_value = "mock_properties"
-        mock_models.ConfigServerResource.return_value = "mock_resource"
 
         client.config_servers.get.return_value = None
 
@@ -101,15 +98,16 @@ class ConfigCreateCommandTest(BasicTest):
 
         resource = self.created_resource
         self.assertIsNotNone(resource.properties)
-        client.config_servers.begin_create_or_update.assert_called_once_with(resource_group, service, "default", "mock_resource")
+        client.config_servers.begin_create_or_update.assert_called_once_with(resource_group, service, "default")
 
-class ConfigDeleteCommandTest(BasicTest):
+
+class ConfigDeleteCommandTest():
     def test_config_delete(self):
         cmd = _get_test_cmd()
         client = _cf_resource_group(cmd.cli_ctx)
         service = "my-service"
         resource_group = "my-resource-group"
 
-        self._execute(cmd, client, service, resource_group)
+        config_delete(_get_test_cmd(), client, service, resource_group)
 
         client.config_servers.begin_delete.assert_called_once_with(resource_group, service, "default")
